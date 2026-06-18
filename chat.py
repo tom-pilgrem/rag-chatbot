@@ -17,6 +17,8 @@ from langchain_community.vectorstores import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.messages import HumanMessage, AIMessage
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
@@ -72,7 +74,10 @@ Answer:""")
         return "\n\n".join(doc.page_content for doc in docs)
 
     chain = (
-        {"context": retriever | format_docs, "input": RunnablePassthrough()}
+        {"context": (lambda x: x["input"]) | retriever | format_docs,
+        "input": lambda x: x["input"],
+         "chat_history": lambda x: x["chat_history"],
+        }
         | prompt
         | llm
         | StrOutputParser()
@@ -97,6 +102,8 @@ def run_chat(chain, retriever, debug: bool = False) -> None:
     print("Ask a question about the Analytics Career Accelerator program.")
     print("Type 'debug' to toggle chunk visibility. Type 'quit' to exit.\n")
 
+    chat_history = []   # stores the conversation so far
+
     while True:
         try:
             question = input("You: ").strip()
@@ -117,7 +124,15 @@ def run_chat(chain, retriever, debug: bool = False) -> None:
         if debug:
             show_retrieved_chunks(retriever, question)
 
-        answer = chain.invoke(question)
+        answer = chain.invoke({
+            "input": question,
+            "chat_history": chat_history,
+        })
+
+        # Add this exchange to history
+        chat_history.append(HumanMessage(content=question))
+        chat_history.append(AIMessage(content=answer))
+
         print(f"\nAssistant: {answer}\n")
 
 # ── Main ──────────────────────────────────────────────────────────────────────
