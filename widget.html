@@ -196,7 +196,11 @@
 <div id="chat-container">
 
   <div id="chat-header">
-    <div class="avatar">💼</div>
+    <div class="avatar">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+      </svg>
+    </div>
     <div>
       <div class="title">MIP Recruitment Assistant</div>
       <div class="subtitle">Ask me anything about the program</div>
@@ -206,7 +210,7 @@
 
   <div id="messages">
     <div class="message bot">
-      <div class="bubble">Hi there! 👋 I can answer questions about MIP's Analytics Career Accelerator program — the application process, what to expect, salary, and more. What would you like to know?</div>
+      <div class="bubble">Hi there! I can answer questions about MIP's Analytics Career Accelerator program — the application process, what to expect, salary, and more. What would you like to know?</div>
       <div class="timestamp">Just now</div>
     </div>
   </div>
@@ -226,7 +230,7 @@
     </button>
   </div>
 
-  <div id="chat-footer">Powered by MIP · <a href="mailto:careers@mipaustralia.com.au" style="color:#0F6E56">careers@mipaustralia.com.au</a></div>
+  <div id="chat-footer">Powered by MIP. <a href="mailto:careers@mip.com.au" style="color:#0F6E56">careers@mip.com.au</a></div>
 
 </div>
 
@@ -300,7 +304,7 @@
 
     } catch (err) {
       removeTyping();
-      addMessage("bot", "Sorry, I couldn't reach the server. Please try again or email careers@mipaustralia.com.au");
+      addMessage("bot", "Sorry, I couldn't reach the server. Please try again or email careers@mip.com.au");
     }
   }
 
