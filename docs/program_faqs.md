@@ -54,6 +54,9 @@ A: Yes. Week 9 is a capstone project where you bring together everything learnt 
 Q: What if I struggle to keep up during training?
 A: Our application process is designed to identify people who will do well, so falling behind technically is rare. If someone does need extra support, we work with them through individual coaching plans. Challenges tend to be on the soft skills side rather than the technical side — and no one has ever been let go during the training phase for not keeping up. No one is left behind.
 
+Q: Can I do the program online or remotely?
+A: No. The 8-week training phase is in-person at MIP's Sydney CBD office, Monday to Friday, 9am to 5pm. You must be based in Sydney or able to relocate for the training phase. Client placements after training may be on-site, remote, or hybrid depending on the client — but the training itself cannot be done remotely.
+
 ---
 
 ## Client Placements
@@ -187,3 +190,4 @@ A: The following resources are useful:
 - Workout Wednesday — workout-wednesday.com — practice exercises for Power BI and Tableau
 - Tableau free training videos — tableau.com/learn/training
 - Microsoft Learn Power BI courses — learn.microsoft.com/en-us/training/powerplatform/power-bi
+
