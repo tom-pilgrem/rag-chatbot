@@ -8,19 +8,17 @@ Run once to build the vector database:
 
 Re-run any time you update your documents in /docs.
 """
+### -- Imports 
 
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-from langchain_community.document_loaders import (
-    TextLoader,
-    UnstructuredMarkdownLoader,
-    PyPDFLoader,
-)
+from langchain_community.document_loaders import TextLoader, PyPDFLoader
+from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
@@ -36,7 +34,6 @@ CHUNK_OVERLAP = 100   # overlap between chunks to avoid splitting mid-answer
 # ── Load documents ────────────────────────────────────────────────────────────
 
 def load_documents(docs_dir: Path) -> list:
-    """Load all .txt, .md, and .pdf files from the docs folder."""
     documents = []
     supported = {".txt", ".md", ".pdf"}
 
@@ -49,16 +46,11 @@ def load_documents(docs_dir: Path) -> list:
 
         if file_path.suffix.lower() == ".pdf":
             loader = PyPDFLoader(str(file_path))
-        elif file_path.suffix.lower() == ".md":
-            loader = UnstructuredMarkdownLoader(str(file_path))
+            docs = loader.load()
         else:
-            loader = TextLoader(str(file_path), encoding="utf-8")
-
-        docs = loader.load()
-
-        # Tag each doc with its source filename for debugging later
-        for doc in docs:
-            doc.metadata["source"] = file_path.name
+            # Read .txt and .md files directly — no unstructured needed
+            text = file_path.read_text(encoding="utf-8")
+            docs = [Document(page_content=text, metadata={"source": file_path.name})]
 
         documents.extend(docs)
 
